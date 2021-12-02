@@ -81,7 +81,7 @@ if __name__ == '__main__':
     for i in cur:
         print(i)
 
-    print("--------------------------------------------------------------")
+    print("--------------------------INSERT INTO------------------------------------")
     cur.execute(
         "insert into test (id, age, first, last) values (100, 25, 'jafer', 'alhaboubi')"
     )
@@ -93,8 +93,8 @@ if __name__ == '__main__':
     for i in cur:
         print(i)
     print("--------------------------------------------------------------")
-    # cur.execute(
-    #     "delete from test where id = 100"
-    # )
+    cur.execute(
+        "delete from test where id = 100"
+    )
 
     conn.close()
