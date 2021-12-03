@@ -15,6 +15,54 @@ def get_all_employees():
         print(i)
 
 
+def generate_user_table():
+    cur.execute(
+        "drop table IF EXISTS user_table"
+    )
+
+    cur.execute(
+        "create table user_table("
+        "email VARCHAR(100), name VARCHAR(50), password VARCHAR(30))"
+    )
+    cur.execute(
+        "insert into user_table (email, name, password) values ('ywbaek@perscholas.org', 'young', 'letsgomets'),"
+    )
+    cur.execute(
+        "insert into user_table (email, name, password) values ('mcordon@perscholas.org', 'marcial', 'perscholas')"
+    )
+    cur.execute(
+        "insert into user_table (email, name, password) values ('mhaseeb@perscholas.org', 'haseeb', 'platform')"
+    )
+
+
+def get_all_users():
+    cur.execute(
+        "select * from user_table"
+    )
+    for i in cur:
+        print(i)
+
+
+def get_user_by_name(name):
+    cur.execute(
+        "select email, password from user_table where name = ?", (name,)
+    )
+    for i in cur:
+        print(f"Here is the {name}\'s email and password {i}")
+
+
+def validate_user(email, password):
+    cur.execute(
+        "select email, password from user_table"
+    )
+    for i in cur:
+        if email == i[0] and password == i[1]:
+            return True
+        else:
+            continue
+    return False
+
+
 if __name__ == '__main__':
 
     try:
@@ -85,6 +133,9 @@ if __name__ == '__main__':
     cur.execute(
         "insert into test (id, age, first, last) values (100, 25, 'jafer', 'alhaboubi')"
     )
+    cur.execute(
+        "insert into test (id, age, first, last) values (101, 26, 'x', 'y')"
+    )
 
     cur.execute(
         "select * from test"
@@ -93,8 +144,13 @@ if __name__ == '__main__':
     for i in cur:
         print(i)
     print("--------------------------------------------------------------")
-    cur.execute(
-        "delete from test where id = 100"
-    )
+    # cur.execute(
+    #     "delete from test where id = 100"
+    # )
+
+    generate_user_table()
+    get_all_users()
+    print("----------------")
+    get_user_by_name('young')
 
     conn.close()
